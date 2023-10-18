@@ -11,18 +11,22 @@ const TodayData = (props) => {
   };
 
   return (
-    <div className="container weatherData w-75 border rounded">
+    <div className=" container weatherData w-75 border rounded" id="12">
       <div className="row currentCity justify-content-left">
         {props.city}, {props.country}
       </div>
+
       <div className="row currentDay">
         {props.weekday} {props.time}
       </div>
+
       <div className="row currentDesc justify-content-left">
         {props.weatherDescription}
       </div>
+
       <div className="row currentTemp justify-content-left">
-        {props.temp}
+        {props.temp}°
+        
       </div>
 
       <div className="row currentTemp justify-content-left">

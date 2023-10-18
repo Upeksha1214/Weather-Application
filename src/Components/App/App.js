@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import weatherApi from "../../util/weatherApi";
 import SearchBar from "../SearchBar/SearchBar";
 import TodayData from "../TodayData/TodayData";
+import Login from "../login/Login"; // Import the Login component
 
 const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [weatherData, setWeatherData] = useState({
     firstTime: true,
     city: "",
@@ -42,6 +44,10 @@ const App = () => {
     }));
   };
 
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+  };
+
   const search = (term) => {
     weatherApi.getTodayData(term).then((data) => updateTodayState(data));
     weatherApi.get3HoursData(term).then((data) => updateWeeklyState(data));
@@ -65,27 +71,31 @@ const App = () => {
 
   return (
     <div className="main">
-      <div className="navbar-main">
-        <h1>Weather</h1>
+    {!isAuthenticated && <Login onLogin={handleLogin} />}
 
-      </div>
-      
-      <SearchBar onSearch={search} />
-      {displayResult() ? (
-        <TodayData
-          city={weatherData.city}
-          country={weatherData.country}
-          temp={weatherData.temp}
-          time={weatherData.time}
-          weekday={weatherData.weekday}
-          weatherDescription={weatherData.weatherDescription}
-          weatherIcon={weatherData.weatherIcon}
-          forecast3hrs={weatherData.forecast3hrs}
-          forecastWeekly={weatherData.forecastWeekly}
-        />
-      ) : (
-        warningBanner()
-      )}
+      {isAuthenticated ? (
+        <>
+        <div className="navbar-main">
+        <h1>Weather</h1>   
+        </div>
+          <SearchBar onSearch={search} />
+          {displayResult() ? (
+            <TodayData
+              city={weatherData.city}
+              country={weatherData.country}
+              temp={weatherData.temp}
+              time={weatherData.time}
+              weekday={weatherData.weekday}
+              weatherDescription={weatherData.weatherDescription}
+              weatherIcon={weatherData.weatherIcon}
+              forecast3hrs={weatherData.forecast3hrs}
+              forecastWeekly={weatherData.forecastWeekly}
+            />
+          ) : (
+            warningBanner()
+          )}
+        </>
+      ) : null}
     </div>
   );
 };
