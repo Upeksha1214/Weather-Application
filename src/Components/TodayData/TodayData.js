@@ -6,6 +6,18 @@ import GetGraph from "../GetGraph/GetGraph";
 const TodayData = (props) => {
   const [showMore, setShowMore] = useState(false);
 
+  const buttonStyles = {
+    width: '250px',
+    height: '50px',
+    border: 'transparent',
+    borderRadius: '52px',
+    background: '5px 5px 10px #1b328a',
+    boxShadow: '-5px -5px 10px #213da8',
+
+    // Add other styles or hover effects as needed
+  };
+
+
   const toggleMore = () => {
     setShowMore(!showMore);
   };
@@ -26,12 +38,14 @@ const TodayData = (props) => {
 
       <div className="row currentTemp justify-content-left">
         {props.temp}°
-        
+
       </div>
 
-      <div className="row currentTemp justify-content-left">
-        <button onClick={toggleMore}>See more</button>
+      <div className="row justify-content-center">
+      <button onClick={toggleMore} style={buttonStyles} >See more</button>
       </div>
+
+
 
       {showMore && (
         <div>
